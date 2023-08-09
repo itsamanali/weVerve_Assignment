@@ -45,8 +45,6 @@ public class Main {
             trainBStations.add(trainBogie);
         }
 
-
-
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Enter Train A and Train B Details : ");
@@ -56,12 +54,7 @@ public class Main {
 
         scanner.close();
 
-//        System.out.println(Arrays.toString(trainAInput));
-//        System.out.println(Arrays.toString(trainBInput));
-
-
-
-        List<TrainBogie> trainABogies = new ArrayList<>();
+        List<TrainBogie> trainABBogies = new ArrayList<>();
         List<TrainBogie> trainAAtHyderabad = new ArrayList<>();
         List<TrainBogie> trainBAtHyderabad = new ArrayList<>();
 
@@ -70,79 +63,44 @@ public class Main {
             String station = trainAInput[i];
             int distance = getDistanceFromSource(station,trainAStaionArr,trainBStaionArr);
 
-            if(distance>1200 )
+            if(distance>=1200 )
                 trainAAtHyderabad.add(new TrainBogie(station, distance));
         }
 
         for (int i = 2; i < trainBInput.length; i++) {
             String station = trainBInput[i];
             int distance = getDistanceFromSource(station,trainAStaionArr,trainBStaionArr);
-            if(distance>2000 )
+            if(distance>=2000 )
                 trainBAtHyderabad.add(new TrainBogie(station, distance));
         }
 
-
-
         System.out.print("ARRIVAL TRAIN_A ENGINE ");
         for (TrainBogie bogie : trainAAtHyderabad) {
-//            System.out.print(bogie.getStation() + " " + bogie.getDistance() +", ");
             System.out.print(bogie.getStation() + " ");
         }
         System.out.println();
 
         System.out.print("ARRIVAL TRAIN_B ENGINE ");
         for (TrainBogie bogie : trainBAtHyderabad) {
-//            System.out.print(bogie.getStation() + " : " + bogie.getDistance() +", " );
             System.out.print(bogie.getStation() + " ");
         }
         System.out.println();
-//
-//        int trainALast = trainAAtHyderabad.size() > 0 ? trainAAtHyderabad.get(trainAAtHyderabad.size() - 1).distance : -1;
-//        int trainBLast = trainBAtHyderabad.size() > 0 ? trainBAtHyderabad.get(trainBAtHyderabad.size() - 1).distance : -1;
-//
-//        if (trainALast == -1 && trainBLast == -1) {
-//            System.out.println("DEPARTURE TRAIN_AB ENGINE ENGINE JOURNEY_ENDED");
-//        } else if (trainALast == -1) {
-//            System.out.print("DEPARTURE TRAIN_AB ENGINE ENGINE ");
-//            for (TrainBogie bogie : trainBAtHyderabad) {
-//                System.out.print(bogie.station + " " + bogie.distance + " ");
-//            }
-//            System.out.println(trainBEngine);
-//        } else if (trainBLast == -1) {
-//            System.out.print("DEPARTURE TRAIN_AB ENGINE ENGINE ");
-//            for (TrainBogie bogie : trainAAtHyderabad) {
-//                System.out.print(bogie.station + " " + bogie.distance + " ");
-//            }
-//            System.out.println(trainAEngine);
-//        } else {
-//            System.out.print("DEPARTURE TRAIN_AB ENGINE ENGINE ");
-//            int indexA = 0, indexB = 0;
-//            while (indexA < trainAAtHyderabad.size() && indexB < trainBAtHyderabad.size()) {
-//                if (trainAAtHyderabad.get(indexA).distance >= trainBAtHyderabad.get(indexB).distance) {
-//                    if (!trainAAtHyderabad.get(indexA).station.equals(trainBAtHyderabad.get(indexB).station)) {
-//                        System.out.print(trainAAtHyderabad.get(indexA).station + " ");
-//                    }
-//                    indexA++;
-//                } else {
-//                    if (!trainAAtHyderabad.get(indexA).station.equals(trainBAtHyderabad.get(indexB).station)) {
-//                        System.out.print(trainBAtHyderabad.get(indexB).station + " ");
-//                    }
-//                    indexB++;
-//                }
-//            }
-//            while (indexA < trainAAtHyderabad.size()) {
-//                if (!trainAAtHyderabad.get(indexA).station.equals(trainBAtHyderabad.get(indexB - 1).station)) {
-//                    System.out.print(trainAAtHyderabad.get(indexA).station + " ");
-//                }
-//                indexA++;
-//            }
-//            while (indexB < trainBAtHyderabad.size()) {
-//                if (!trainBAtHyderabad.get(indexB).station.equals(trainAAtHyderabad.get(indexA - 1).station)) {
-//                    System.out.print(trainBAtHyderabad.get(indexB).station + " ");
-//                }
-//                indexB++;
-//            }
-//            System.out.println(trainAEngine + " " + trainBEngine);
-//        }
+
+
+        Collections.sort(trainAAtHyderabad);
+        Collections.sort(trainBAtHyderabad);
+        Collections.sort(trainABBogies);
+
+
+        System.out.print("DEPARTURE TRAIN_AB ");
+        if(!trainAAtHyderabad.isEmpty()){
+            System.out.print("ENGINE ");
+        }if(!trainBAtHyderabad.isEmpty()){
+            System.out.print("ENGINE ");
+        }
+        for (TrainBogie bogie : trainABBogies) {
+            System.out.print(bogie.getStation() + " ");
+        }
+
     }
 }
