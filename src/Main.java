@@ -22,7 +22,7 @@ public class Main {
 
         A.removeBogiesWithDistanceLessThanHYB();
         if(A.size>0) {
-            System.out.print("TRAIN_A ARRIVAL ");
+            System.out.print("ARRIVAL TRAIN_A ");
             System.out.print("ENGINE ");
             A.print(A.head.next);
             System.out.println();
@@ -30,7 +30,7 @@ public class Main {
 
         B.removeBogiesWithDistanceLessThanHYB();
         if(B.size>0) {
-            System.out.print("TRAIN_B ARRIVAL ");
+            System.out.print("ARRIVAL TRAIN_B ");
             System.out.print("ENGINE ");
             B.print(B.head.next);
             System.out.println();
