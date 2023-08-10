@@ -35,14 +35,7 @@ public class Train {
             distanceMap.put(stationList[i],Integer.parseInt(stationList[i+1]));
         }
     }
-    public boolean kyaEngHai(){
-        Bogie temp = head;
-        while (temp != null){
-            if(temp.isEngine) return temp.isEngine;
-            else temp =temp.next;
-        }
-        return false;
-    }
+
     public void add(String destination){
         Bogie bogie = new Bogie();
         size++;
@@ -50,11 +43,14 @@ public class Train {
         bogie.destStn = destination;
         bogie.dist = findDistance(destination);
 
+        //adding new node at starting
+        // between head and engine
+        // head->bogie1->bogie2->bogie2->Engine
         bogie.next = head.next;
         head.next = bogie;
     }
     public void removeHYB(Bogie head){
-
+        // we can remove any station if we take as argument
         Bogie temp = head;
         while (temp.next != null ){
             if(temp.next.destStn != null && temp.next.destStn.equals("HYB")){
@@ -87,6 +83,7 @@ public class Train {
 
     }
     public void sortList() {
+        // this is bubble sort
         //Node current will point to head
         Bogie current = head.next, index = null;
         if(head == null) {
@@ -135,7 +132,7 @@ public class Train {
             System.out.print(tHead.destStn+" ");
     }
    Bogie reverse(Bogie head) {
-//        System.out.println("reverse called");
+        // adding a engine node at the starting so that on reverse it goes to last
         Bogie eng = new Bogie();
         eng.isEngine=true;
         eng.next = head;
@@ -149,9 +146,8 @@ public class Train {
             prev = current;
             current = next;
         }
-//       System.out.println("reverse called "+ prev.destStn+" "+prev.isEngine);
+        // returning the head of reversed linked list
         return prev.next;
-//        print(prev.next);
     }
 
     public Bogie mergeTwoLists(Bogie list1,Bogie list2){
@@ -170,11 +166,15 @@ public class Train {
 
 
     }
-    public int findDistance(String stn){return distanceMap.getOrDefault(stn,-1);}
+    public int findDistance(String stn){
+        return distanceMap.getOrDefault(stn,-1);
+    }
     public Bogie rearrange() {
-        Bogie newHead = new Bogie();
+
+        // storing the order of bogies to be arranged
         ArrayList<String> order = copyOf();
 
+        // making key value pair using hashmap for grouping same destination station
         Map<String, LinkedList<Bogie>> bogieMap = new HashMap<>();
         Bogie temp = head;
         while (temp != null){
@@ -187,12 +187,11 @@ public class Train {
             }
             temp= temp.next;
         }
-
+        // this will point to new arranged list
+        Bogie newHead = new Bogie();
         temp = newHead;
         for (int i = order.size()-1 ; i >= 0; i--){
             String dest = order.get(i);
-
-
             LinkedList<Bogie> list = bogieMap.get(dest);
 
             if(list != null) {
@@ -200,6 +199,7 @@ public class Train {
                     temp.next = b;
                     temp = temp.next;
                 }
+                // removing destination from map so that there will be no redundancy
                 bogieMap.remove(dest);
             }
             if(i==0) {
@@ -219,6 +219,10 @@ public class Train {
         }
         return orderOfStation;
     }
+
+    // this function is used to add distances to the
+    // bogies which are boarding at another station where direct route to destination is
+    // not available
     void fullFillDistances(Map<String,Integer> otherTrain){
 
         Bogie temp = head;
